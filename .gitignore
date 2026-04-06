@@ -1,0 +1,24 @@
+# Java/Maven
+/backend/target/
+*.jar
+*.war
+.idea/
+.vscode/
+*.iml
+*.class
+.project
+.classpath
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+/.venv/
+venv/
+ENV/
+env/
+.env
+
+# OS generated files
+.DS_Store
+Thumbs.db
