@@ -3,7 +3,6 @@ package bg.tu.ulica.controller;
 import bg.tu.ulica.dto.IngestRequest;
 import bg.tu.ulica.model.RawScrape;
 import bg.tu.ulica.repository.RawScrapeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +12,6 @@ public class IngestionController {
 
     private final RawScrapeRepository rawScrapeRepository;
 
-    @Autowired
     public IngestionController(RawScrapeRepository rawScrapeRepository) {
         this.rawScrapeRepository = rawScrapeRepository;
     }
