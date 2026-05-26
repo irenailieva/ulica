@@ -22,3 +22,7 @@ env/
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# Images
+/cat_images/
+query_image.jpg
