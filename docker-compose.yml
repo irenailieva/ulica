@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  db:
+    build: 
+      context: ./db
+      dockerfile: Dockerfile
+    container_name: ulica_db
+    environment:
+      POSTGRES_USER: ulica_user
+      POSTGRES_PASSWORD: ulica_password
+      POSTGRES_DB: ulica_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/migrations:/docker-entrypoint-initdb.d
+    restart: always
+
+  redis:
+    image: redis:alpine
+    container_name: ulica_redis
+    ports:
+      - "6379:6379"
+    restart: always
+
+  minio:
+    image: minio/minio
+    container_name: ulica_minio
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    restart: always
+
+  minio-create-bucket:
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc config host add myminio http://minio:9000 minioadmin minioadmin;
+      /usr/bin/mc mb myminio/animal-sightings;
+      /usr/bin/mc anonymous set public myminio/animal-sightings;
+      exit 0;
+      "
+
+volumes:
+  pgdata:
+  minio_data:
